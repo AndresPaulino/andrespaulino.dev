@@ -1,0 +1,185 @@
+---
+year: 2024
+title: 'DocuSign Manager: Enterprise Document Signing Automation'
+htmlTitle: 'DocuSign Manager: Enterprise Document\nSigning Automation'
+description: 'A full-stack application that streamlines document signing workflows by integrating DocuSign with enterprise systems.'
+heroImage: '../../assets/project_bookmarked_1.png'
+links:
+  - name: 'GitHub'
+    icon: 'Github' 
+    url: 'https://github.com/andrespaulino/docusign-manager'
+---
+
+import { SiFlask, SiPython, SiSqlalchemy } from 'react-icons/si'
+import { BsPencilSquare } from 'react-icons/bs'
+
+import GithubCard from '@/components/GithubCard.astro'
+import Image from '@/components/Image/Image.astro'
+import LinkCard from '@/components/LinkCard.astro'
+import { Tooltip } from '@/components/ui/tooltip'
+
+## Overview
+
+DocuSign Manager is an enterprise-grade document signing automation platform that streamlines the process of collecting signatures across complex organizational hierarchies. Built with Flask and the DocuSign eSignature API, it features intelligent signature routing, template management, and comprehensive status tracking. The application supports both web-based management and API integration, making it flexible enough to handle various document signing workflows.
+
+## Goals and Motivation
+
+Document signing in enterprise environments presents unique challenges. Organizations often need to:
+
+- Route documents through specific approval chains
+- Handle multiple signers with different roles
+- Maintain templates for recurring documents
+- Track document status across departments
+- Ensure compliance with signing policies
+
+While DocuSign provides powerful APIs, integrating them into enterprise workflows requires careful orchestration. Existing solutions often lack flexibility or require significant manual intervention. DocuSign Manager bridges this gap by providing an intuitive interface for managing complex signing workflows while maintaining security and compliance.
+
+## Technology Stack
+
+### <SiFlask />Flask & Python
+
+Powers the core application with a clean, maintainable architecture:
+
+- **Flask-OpenAPI3**: Provides automatic API documentation and validation
+- **Flask-SQLAlchemy**: Handles database operations with proper transaction management
+- **Flask-Migrate**: Manages database schema evolution
+
+### <BsPencilSquare />DocuSign Integration
+
+Leverages DocuSign's eSignature API for document processing:
+
+- **JWT Authentication**: Secure authentication flow with consent management
+- **Template-based Assembly**: Intelligent document packaging and routing
+- **Webhook Processing**: Real-time status updates and document tracking
+
+### <SiSqlalchemy />Database Design
+
+Implements a robust SQL Server schema:
+
+- **Document Templates**: Stores signature field coordinates and rules
+- **Signer Management**: Handles complex routing hierarchies
+- **Status Tracking**: Maintains comprehensive audit trails
+
+## Key Features
+
+### Template-Based Document Assembly
+
+Save time by creating reusable templates with predefined signature fields. Each template stores precise coordinates for signature placements, making document preparation consistent and error-free.
+
+### Intelligent Signer Routing
+
+Automatically routes documents based on organizational roles and rules:
+
+- Primary signers always sign first
+- Joint signers can sign in parallel
+- Conditional routing based on document type
+- Power of Attorney handling
+- Multiple signers per role support
+
+### Real-Time Status Tracking
+
+Monitor document status through multiple channels:
+
+- Web interface for real-time updates
+- Webhook integration for system notifications
+- Comprehensive audit logging
+- Status querying API
+
+### Enterprise Integration
+
+Seamlessly connects with existing systems:
+
+- REST API for programmatic access
+- Batch document processing
+- Custom authentication support
+- Detailed logging and monitoring
+
+## Challenges and Solutions
+
+### JWT Authentication Complexity
+
+DocuSign's JWT authentication flow presented several challenges:
+
+- Managing consent across multiple users
+- Handling token refresh
+- Securing private keys
+
+We solved this by implementing:
+
+- Automatic consent redirection
+- Token caching with refresh
+- Secure key storage with rotation
+
+### Template Synchronization
+
+Maintaining template consistency across multiple environments proved challenging:
+
+- Different template IDs per environment
+- Varying signature requirements
+- Template version control
+
+Our solution involved:
+
+- Template version tracking
+- Environment-specific mapping
+- Automated template validation
+
+### Signer Resolution
+
+Complex signing hierarchies created interesting problems:
+
+- Multiple signers sharing roles
+- Conditional signing requirements
+- Order dependencies
+
+We addressed these by:
+
+- Implementing role-based queuing
+- Building a flexible rules engine
+- Adding signature field distribution logic
+
+## Future Enhancements
+
+### Advanced Analytics
+
+Planning to add comprehensive analytics:
+
+- Signing time analytics
+- Bottleneck identification
+- Compliance reporting
+- Usage patterns analysis
+
+### Mobile Support
+
+Expanding platform accessibility:
+
+- Native mobile apps
+- Responsive web interface
+- Mobile signature optimization
+- Offline capability
+
+### AI Integration
+
+Exploring AI-powered features:
+
+- Automatic template suggestion
+- Smart routing optimization
+- Anomaly detection
+- Process optimization
+
+## Repositories
+
+{/* <div className='not-prose space-y-4'>
+  <GithubCard owner='andrespaulino' repository='docusign-manager' />
+</div> */}
+
+## Lessons Learned
+
+This project taught valuable lessons about:
+
+- Enterprise integration complexities
+- API security best practices
+- Scalable webhook processing
+- State management in distributed systems
+
+The biggest takeaway was the importance of robust error handling and comprehensive logging in production systems. Every edge case we encountered improved our understanding of enterprise requirements.
