@@ -15,6 +15,7 @@ type FooterContent = {
     href: string
     withIcon?: boolean
     inNewTab?: boolean
+    download?: boolean
   }[]
 }
 
@@ -49,19 +50,18 @@ const FOOTER_CONTENTS: FooterContent[] = [
     ]
   },
   {
-    title: 'Elsewhere',
+    title: 'Others',
     links: [
-      {
-        text: 'Bluesky',
-        href: 'https://bsky.app/profile/andrespaulino.dev',
-        inNewTab: true,
-        withIcon: true
-      },
       {
         text: 'Monkeytype',
         href: 'https://monkeytype.com/profile/andrespaulino',
         inNewTab: true,
         withIcon: true
+      },
+      {
+        text: 'Resume',
+        href: '/Andres_Paulino_Resume.pdf',
+        download: true
       }
     ]
   }

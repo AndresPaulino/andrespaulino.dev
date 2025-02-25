@@ -17,7 +17,8 @@ export const SOCIAL_MEDIA_DATA = [
   {
     name: 'Resume',
     icon: Scroll,
-    href: 'https://read.cv/andrespaulino'
+    href: '/Andres_Paulino_Resume.pdf',
+    download: true
   },
   {
     name: 'Email',

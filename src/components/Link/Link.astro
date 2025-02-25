@@ -4,6 +4,7 @@ interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   hoverStyled?: boolean
   hoverEffectOffsetStart?: string
   hoverEffectOffsetEnd?: string
+  download?: boolean | string
 }
 
 const {
@@ -12,6 +13,7 @@ const {
   hoverEffectOffsetStart,
   hoverEffectOffsetEnd,
   class: className,
+  download,
   ...rest
 } = Astro.props
 
@@ -83,5 +85,6 @@ const offsetEnd = hoverEffectOffsetEnd
     },
     className
   ]}
+  download={download}
   {...rest}><slot /></a
 >
