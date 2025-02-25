@@ -1,11 +1,5 @@
 import type { SVGProps } from 'react'
 
-interface Props {
-  class?: string | undefined;
-}
-
-const { class: className } = Astro.props;
-
 export function SQLAlchemy(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -14,7 +8,7 @@ export function SQLAlchemy(props: SVGProps<SVGSVGElement>) {
       width='1em'
       height='1em'
       viewBox='0 0 24 24'
-      class={className}
+      {...props}
     >
       <path
         fill='currentColor'
@@ -22,4 +16,4 @@ export function SQLAlchemy(props: SVGProps<SVGSVGElement>) {
       />
     </svg>
   )
-} 
+}

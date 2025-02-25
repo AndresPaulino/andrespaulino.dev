@@ -1,27 +1,25 @@
 // Tremor Tooltip [v0.0.2]
 
+import * as React from 'react'
 import * as TooltipPrimitives from '@radix-ui/react-tooltip'
-import Markdown from 'markdown-to-jsx'
-import React from 'react'
+import Markdown from 'react-markdown'
 
 import { cn } from '@/lib/utils'
 
-import TooltipArrow from './tooltip-arrow'
-import TooltipArrowPrimitive from './tooltip-arrow-primitive'
-
-interface TooltipProps
-  extends Omit<TooltipPrimitives.TooltipContentProps, 'content' | 'onClick'>,
-    Pick<
-      TooltipPrimitives.TooltipProps,
-      'open' | 'defaultOpen' | 'onOpenChange' | 'delayDuration'
-    > {
-  content: React.ReactNode
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
-  side?: 'bottom' | 'left' | 'top' | 'right'
-  showArrow?: boolean
+interface TooltipProps {
+  content: React.ReactNode | string
+  children: React.ReactNode
+  delayDuration?: number
+  defaultOpen?: boolean
+  open?: boolean
+  onClick?: () => void
+  onOpenChange?: (open: boolean) => void
   triggerAsChild?: boolean
   isMarkdownContent?: boolean
   withUnderline?: boolean
+  side?: 'bottom' | 'left' | 'top' | 'right'
+  showArrow?: boolean
+  className?: string
 }
 
 type TooltipContentProps = Omit<
@@ -40,78 +38,32 @@ type TooltipProviderProps = Pick<
   'open' | 'defaultOpen' | 'onOpenChange' | 'delayDuration' | 'children'
 >
 
-const TooltipProvider = ({
-  children,
-  delayDuration = 150,
-  ...restProps
-}: TooltipProviderProps) => {
-  return (
-    <TooltipPrimitives.Provider delayDuration={delayDuration}>
-      <TooltipPrimitives.Root
-        tremor-id='tremor-raw'
-        delayDuration={delayDuration}
-        {...restProps}
-      >
-        {children}
-      </TooltipPrimitives.Root>
-    </TooltipPrimitives.Provider>
-  )
-}
+const TooltipProvider = TooltipPrimitives.Provider
+
 const TooltipTrigger = TooltipPrimitives.Trigger
 
 const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitives.Content>,
-  TooltipContentProps
->((props, forwardedRef) => {
-  const {
-    children,
-    showArrow = true,
-    sideOffset = 12,
-    className,
-    ...restProps
-  } = props
-
-  return (
-    <TooltipPrimitives.Portal>
-      <TooltipPrimitives.Content
-        ref={forwardedRef}
-        align='center'
-        className={cn(
-          // base
-          'max-w-96 select-none rounded-lg px-4 py-2 text-[0.9rem] leading-relaxed tracking-wide shadow-md',
-          // text color
-          'text-zinc-400',
-          // background color
-          'bg-[var(--tooltip-color)]',
-          // transition
-          'will-change-[transform,opacity]',
-          'data-[side=bottom]:animate-slideDownAndFade data-[side=left]:animate-slideLeftAndFade data-[side=right]:animate-slideRightAndFade data-[side=top]:animate-slideUpAndFade data-[state=closed]:animate-hide',
-          // other
-          'z-50 border border-[var(--tooltip-border-color)]',
-          'tooltip-content',
-          className
-        )}
-        sideOffset={sideOffset}
-        {...restProps}
-      >
-        {children}
-        {showArrow && (
-          <>
-            <TooltipArrowPrimitive />
-            <TooltipArrow aria-hidden='true' />
-          </>
-        )}
-      </TooltipPrimitives.Content>
-    </TooltipPrimitives.Portal>
-  )
-})
+  React.ComponentRef<typeof TooltipPrimitives.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitives.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitives.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      'z-50 overflow-hidden rounded-md border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-50 shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      className
+    )}
+    {...props}
+  />
+))
+TooltipContent.displayName = TooltipPrimitives.Content.displayName
 
 /**
  * simply use this component if the tooltip content is simple
  * and doesn't need any additional configuration
  */
 const Tooltip = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitives.Content>,
+  React.ComponentRef<typeof TooltipPrimitives.Content>,
   TooltipProps
 >(
   (
@@ -126,16 +78,17 @@ const Tooltip = React.forwardRef<
       triggerAsChild = false,
       isMarkdownContent = false,
       withUnderline,
+      className,
       ...props
     }: TooltipProps,
     forwardedRef
   ) => {
     return (
-      <TooltipProvider
-        open={open}
-        defaultOpen={defaultOpen}
-        onOpenChange={onOpenChange}
+      <TooltipPrimitives.Root
         delayDuration={delayDuration}
+        defaultOpen={defaultOpen}
+        open={open}
+        onOpenChange={onOpenChange}
       >
         <TooltipTrigger onClick={onClick} asChild={triggerAsChild}>
           {withUnderline ? (
@@ -146,18 +99,15 @@ const Tooltip = React.forwardRef<
             children
           )}
         </TooltipTrigger>
-        <TooltipContent ref={forwardedRef} {...props}>
+        <TooltipContent ref={forwardedRef} className={className} {...props}>
           {isMarkdownContent ? (
             <Markdown
-              options={{
-                overrides: {
-                  a: {
-                    props: {
-                      className: 'text-emerald-400 hover:underline',
-                      target: '_blank'
-                    }
-                  }
-                }
+              components={{
+                a: ({ children }) => (
+                  <a className="text-emerald-400 hover:underline" target="_blank">
+                    {children}
+                  </a>
+                )
               }}
             >
               {content as string}
@@ -166,7 +116,7 @@ const Tooltip = React.forwardRef<
             content
           )}
         </TooltipContent>
-      </TooltipProvider>
+      </TooltipPrimitives.Root>
     )
   }
 )

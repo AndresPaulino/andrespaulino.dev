@@ -1,9 +1,12 @@
 ---
-import Link from './Link'
+import Link from './Link/Link.astro'
 
-interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
+interface Props {
+  class?: string;
+  href: string;
+}
 
-const { class: className, ...rest } = Astro.props
+const { class: className, ...rest } = Astro.props;
 ---
 
 <Link class={className} {...rest}>
@@ -87,42 +90,29 @@ const { class: className, ...rest } = Astro.props
   }
 
   .animated-button .text {
-    position: relative;
-    z-index: 1;
-    transform: translateX(-12px);
+    z-index: 10;
     transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .animated-button:hover {
-    box-shadow: 0 0 0 8px transparent;
-    color: #212121;
-    border-radius: 12px;
-  }
-
-  .animated-button:hover .arr-1 {
-    right: -25%;
+    border-color: var(--color);
   }
 
   .animated-button:hover .arr-2 {
     left: 16px;
   }
 
+  .animated-button:hover .arr-1 {
+    right: -25%;
+  }
+
   .animated-button:hover .text {
-    transform: translateX(12px);
-  }
-
-  .animated-button:hover svg {
-    fill: #212121;
-  }
-
-  .animated-button:active {
-    scale: 0.95;
-    box-shadow: 0 0 0 4px var(--color);
+    transform: translateX(8px);
   }
 
   .animated-button:hover .circle {
-    width: 220px;
-    height: 220px;
-    opacity: 1;
+    width: 200px;
+    height: 200px;
+    opacity: 0.1;
   }
 </style>
