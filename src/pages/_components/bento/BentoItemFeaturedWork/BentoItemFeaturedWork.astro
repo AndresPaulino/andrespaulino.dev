@@ -1,6 +1,7 @@
 ---
 import { Bookmarks } from '@icons/Bookmarks'
 import { Suitcase } from '@icons/Suitcase'
+import { Trading } from '@icons/Trading'
 
 import Link from '@/components/Link'
 import NotificationCard from '@/components/NotificationCard'
@@ -22,10 +23,9 @@ import BentoBadge from '../BentoBadge'
       className={{ component: 'w-fit' }}
     />
     <div class='space-y-3 xs:max-md:w-1/2'>
-      <p class='text-xl leading-none'>Docusign Manager</p>
+      <p class='text-xl leading-none'>Atomatico</p>
       <p class='text-sm leading-relaxed text-slate-400'>
-        Effortlessly save and organize your favorite tweets in Notion using a
-        Telegram bot.
+        Create, test and deploy trading strategies with a drag and drop interface.
       </p>
     </div>
   </div>
@@ -50,29 +50,29 @@ import BentoBadge from '../BentoBadge'
       >
       </div>
       <NotificationCard
-        sender='Docusign Manager'
+        sender='Atomatico'
         time='Just now'
-        message='Your bookmark has been saved'
+        message="You've earned 33% profit for trade #2998"
         class:list={[
           'z-20 text-slate-700 max-xs:w-[300px]',
           'transition-all duration-300',
           'group-hover:-mt-2 group-hover:scale-105',
           'hidden-notification-card'
         ]}
-        ><Bookmarks className='size-6' />
+        ><Trading className='size-6' />
       </NotificationCard>
 
       <NotificationCard
-        sender='Docusign Manager'
+        sender='Atomatico'
         time='1m ago'
-        message='Bookmarking this thread'
+        message='Your strategy has been deployed'
         class:list={[
           'z-10 -mt-8 w-[88%] bg-slate-400 text-slate-800',
           'transition-all duration-500',
           'group-hover:-mt-2 group-hover:scale-105',
           'hidden-notification-card'
         ]}
-        ><Bookmarks className='size-6' />
+        ><Trading className='size-6' />
       </NotificationCard>
     </div>
   </div>
