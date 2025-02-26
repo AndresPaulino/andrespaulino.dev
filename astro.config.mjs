@@ -1,16 +1,26 @@
 // @ts-check
 import mdx from '@astrojs/mdx'
+import node from '@astrojs/node'
 import partytown from '@astrojs/partytown'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
+import vercel from '@astrojs/vercel/static'
 import { defineConfig, envField } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 
+// For deployment to Vercel, we need to use the static adapter
+const adapter = vercel({
+  webAnalytics: {
+    enabled: true
+  }
+});
+
 // https://astro.build/config
 export default defineConfig({
-  output: 'static', // Ensure static output
+  adapter,
+  output: 'static',
   site: 'https://andrespaulino.dev',
 
   markdown: {
@@ -32,9 +42,7 @@ export default defineConfig({
       }),
       GITHUB_ACCESS_TOKEN: envField.string({
         context: 'server',
-        access: 'secret',
-        optional: true, // Make this optional so it doesn't fail when not present
-        default: '' // Provide a default empty string
+        access: 'secret'
       }),
       SPOTIFY_CLIENT_ID: envField.string({
         context: 'server',
