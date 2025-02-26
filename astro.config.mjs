@@ -5,22 +5,23 @@ import partytown from '@astrojs/partytown'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
-import vercel from '@astrojs/vercel/static'
+import vercel from '@astrojs/vercel'
 import { defineConfig, envField } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 
-// For deployment to Vercel, we need to use the static adapter
+// Configure Vercel adapter
 const adapter = vercel({
   webAnalytics: {
     enabled: true
-  }
-});
+  },
+  imageService: false
+})
 
 // https://astro.build/config
 export default defineConfig({
   adapter,
-  output: 'static',
+  output: 'server', // Change from 'static' to 'server' for SSR
   site: 'https://andrespaulino.dev',
 
   markdown: {
