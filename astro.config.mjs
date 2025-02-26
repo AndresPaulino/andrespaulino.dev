@@ -1,25 +1,16 @@
 // @ts-check
 import mdx from '@astrojs/mdx'
-import node from '@astrojs/node'
 import partytown from '@astrojs/partytown'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
-import vercel from '@astrojs/vercel'
 import { defineConfig, envField } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 
-let adapter = vercel()
-
-if (process.argv[3] === '--node' || process.argv[4] === '--node') {
-  adapter = node({ mode: 'standalone' })
-}
-
 // https://astro.build/config
 export default defineConfig({
-  adapter,
-  output: 'static',
+  output: 'static', // Ensure static output
   site: 'https://andrespaulino.dev',
 
   markdown: {
@@ -41,7 +32,9 @@ export default defineConfig({
       }),
       GITHUB_ACCESS_TOKEN: envField.string({
         context: 'server',
-        access: 'secret'
+        access: 'secret',
+        optional: true, // Make this optional so it doesn't fail when not present
+        default: '' // Provide a default empty string
       }),
       SPOTIFY_CLIENT_ID: envField.string({
         context: 'server',
