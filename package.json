@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:vercel": "set NODE_OPTIONS=--max_old_space_size=4096 && cross-env VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID astro build",
     "build:node": "astro build --node",
     "preview": "astro build --node && astro preview --node --port 3000",
     "astro": "astro",
@@ -78,6 +79,7 @@
     "prettier": "^3.4.2",
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.6.9"
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "cross-env": "^7.0.3"
   }
 }
