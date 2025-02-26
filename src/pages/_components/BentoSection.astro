@@ -16,11 +16,11 @@ import BentoItemNowPlaying from './bento/BentoItemNowPlaying'
 import BentoItemTechStack from './bento/BentoItemTechStack'
 import BentoItemTypingSpeed from './bento/BentoItemTypingSpeed'
 
-// const socialMedias = [
-//   { icon: X, href: 'https://twitter.com/iandresmiguel' },
-//   { icon: Figma, href: 'https://www.figma.com/@andrespaulino' },
-//   { icon: Codepen, href: 'https://codepen.io/andrespaulino' }
-// ]
+const socialMedias = [
+  { icon: X, href: 'https://twitter.com/jestseee' },
+  { icon: Figma, href: 'https://www.figma.com/@jestsee' },
+  { icon: Codepen, href: 'https://codepen.io/jestsee' }
+]
 ---
 
 <script>
@@ -53,7 +53,7 @@ import BentoItemTypingSpeed from './bento/BentoItemTypingSpeed'
   <div
     class:list={[
       'relative col-start-1 col-end-11 row-start-1 row-end-[8] aspect-square',
-      'max-lg:col-end-3 max-lg:row-end-3 h-full w-full'
+      'max-lg:col-end-3 max-lg:row-end-3'
     ]}
   >
     <BentoBadge
@@ -61,10 +61,10 @@ import BentoItemTypingSpeed from './bento/BentoItemTypingSpeed'
       text='Location'
       icon={Location}
     />
-    <BentoItemMapLocation className='rounded-xl' client:only='react' />
+    <BentoItemMapLocation className='rounded-3xl' client:only='react' />
   </div>
 
-  <!-- <div
+  <div
     class:list={[
       'grid grid-cols-3 gap-4',
       'col-start-1 col-end-11 row-start-[7] row-end-[9]',
@@ -85,7 +85,7 @@ import BentoItemTypingSpeed from './bento/BentoItemTypingSpeed'
         </BentoCard>
       ))
     }
-  </div> -->
+  </div>
 
   <!-- Works -->
   <BentoCard
