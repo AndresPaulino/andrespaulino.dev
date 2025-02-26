@@ -3,6 +3,5 @@
     "installCommand": "npm install",
     "framework": "astro",
     "devCommand": "astro dev",
-    "outputDirectory": "dist",
-    "ignoreCommand": false
+    "outputDirectory": "dist"
   }

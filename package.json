@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "vercel-build": "astro build",
     "build:vercel": "set NODE_OPTIONS=--max_old_space_size=4096 && cross-env VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID astro build",
     "build:node": "astro build --node",
     "preview": "astro build --node && astro preview --node --port 3000",
