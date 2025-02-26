@@ -25,11 +25,14 @@ const app = new Hono()
       return c.json(await getLinkMetadata(url))
     }
   )
-  .get('/monkeytype', async (c) =>
-    c.json(await getMonkeytypeData(), 200, {
+  .get('/monkeytype', async (c) => {
+    console.log('Monkeytype API endpoint called');
+    const data = await getMonkeytypeData();
+    console.log('Monkeytype API endpoint returning data:', data);
+    return c.json(data, 200, {
       'Cache-Control': 's-maxage=43200, stale-while-revalidate=600'
-    })
-  )
+    });
+  })
   .get('/spotify', async (c) =>
     c.json(await getSpotifyData(), 200, {
       'Cache-Control': 's-maxage=8, stale-while-revalidate=2'
