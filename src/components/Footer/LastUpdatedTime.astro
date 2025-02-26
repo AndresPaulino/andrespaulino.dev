@@ -6,9 +6,7 @@ interface Props {
   class?: string
 }
 
-let data = null;
-let date = new Date();
-
+let data;
 try {
   const response = await client.api.github['repo-info'][':owner'][
     ':repository'
@@ -21,27 +19,23 @@ try {
   
   if (response.status === 200) {
     data = await response.json();
-    if (data && data.pushedAt) {
-      date = new Date(data.pushedAt);
-    }
   }
 } catch (error) {
-  console.error('Error fetching repository info:', error)
-  // Continue with default date
+  console.error('Error fetching repository info:', error);
 }
 
-const formattedDate = formatDateByTimeZone(date)
+// Fallback if data isn't available
+if (!data) {
+  data = {
+    pushedAt: new Date().toISOString()
+  };
+}
 
-const { class: className } = Astro.props
+const date = new Date(data.pushedAt);
+const formattedDate = formatDateByTimeZone(date);
+const { class: className } = Astro.props;
 ---
 
-{
-  data ? (
-    <p class:list={['text-xs min-[961px]:self-end', className]}>
-      Last updated by Andres Paulino <br class='xs:hidden' /> on {formattedDate} UTC+7
-    </p>
-  ) : (
-    // TODO: handle error
-    <p>Something went wrong 😔</p>
-  )
-}
+<p class:list={['text-xs min-[961px]:self-end', className]}>
+  Last updated by Andres Paulino <br class='xs:hidden' /> on {formattedDate} UTC+7
+</p>
