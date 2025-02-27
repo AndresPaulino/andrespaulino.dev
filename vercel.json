@@ -1,9 +1,5 @@
 {
     "version": 2,
     "buildCommand": "pnpm install --no-frozen-lockfile && pnpm run build",
-    "outputDirectory": "dist/client",
-    "routes": [
-      { "handle": "filesystem" },
-      { "src": "/(.*)", "dest": "/404.html" }
-    ]
+    "outputDirectory": "dist/client"
 }
