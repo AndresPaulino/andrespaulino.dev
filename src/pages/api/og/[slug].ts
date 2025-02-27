@@ -109,6 +109,11 @@ const generateHtml = (data: AllCollectionEntry['data']): ReactElement => {
 }
 
 export const GET: OGAPIRoute = async ({ props }) => {
+  // Check if posts exists before destructuring
+  if (!props.posts) {
+    return new Response('Content not found', { status: 404 });
+  }
+
   const {
     posts: { data }
   } = props
