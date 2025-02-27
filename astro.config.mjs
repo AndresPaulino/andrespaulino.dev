@@ -15,12 +15,13 @@ const adapter = vercel({
   webAnalytics: {
     enabled: true
   },
-  imageService: false
+  imageService: false,
+  edgeMiddleware: true
 })
 
 // https://astro.build/config
 export default defineConfig({
-  adapter,
+  adapter: vercel(),
   output: 'server', // Change from 'static' to 'server' for SSR
   site: 'https://andrespaulino.dev',
 
