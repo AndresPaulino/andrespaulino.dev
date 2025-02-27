@@ -14,12 +14,14 @@ export async function GET(context) {
     title: mainMetaData.title,
     description: mainMetaData.description,
     site: context.site,
-    items: posts.map((post) => ({
-      ...post.data,
-      link: `/blog/${post.id}/`,
-      content: sanitizeHtml(parser.render(post.body), {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
-      })
-    }))
+    items: posts
+      .filter(post => post && post.body)
+      .map((post) => ({
+        ...post.data,
+        link: `/blog/${post.id}/`,
+        content: sanitizeHtml(parser.render(post.body), {
+          allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
+        })
+      }))
   })
 }

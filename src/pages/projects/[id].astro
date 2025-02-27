@@ -21,6 +21,9 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths
 
 const { entry } = Astro.props
+if (!entry) {
+  return new Response('Project not found', { status: 404 });
+}
 const { Content, headings } = await render(entry)
 
 const getLastUpdatedTime = client.api.github['last-updated-file']

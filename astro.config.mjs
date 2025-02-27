@@ -21,7 +21,7 @@ const adapter = vercel({
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: vercel(),
+  adapter,
   output: 'server', // Change from 'static' to 'server' for SSR
   site: 'https://andrespaulino.dev',
 
