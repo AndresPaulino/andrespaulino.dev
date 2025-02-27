@@ -10,16 +10,19 @@ import { defineConfig, envField } from 'astro/config'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 
-let adapter = vercel()
-
-if (process.argv[3] === '--node' || process.argv[4] === '--node') {
-  adapter = node({ mode: 'standalone' })
-}
+// Configure Vercel adapter
+const adapter = vercel({
+  webAnalytics: {
+    enabled: true
+  },
+  imageService: false,
+  edgeMiddleware: true
+})
 
 // https://astro.build/config
 export default defineConfig({
-  adapter,
-  output: 'static',
+  adapter: vercel(),
+  output: 'server', // Change from 'static' to 'server' for SSR
   site: 'https://andrespaulino.dev',
 
   markdown: {

@@ -43,7 +43,7 @@ const generateHtml = (data: AllCollectionEntry['data']): ReactElement => {
         {
           type: 'div',
           props: {
-            tw: 'flex self-start items-center rounded-full gap-4 py-3 pl-3 pr-4 border border-slate-600 text-white',
+            tw: 'flex self-start items-center rounded-full py-3 pl-3 pr-4 border border-slate-600 text-white',
             children: [
               {
                 type: 'div',

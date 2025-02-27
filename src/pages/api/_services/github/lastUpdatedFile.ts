@@ -15,15 +15,40 @@ const getLastUpdatedTimeByFile = async (
     per_page: '1'
   }).toString()
 
-  const response = await fetch(API_URL + params, {
-    headers: { Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}` }
-  })
+  try {
+    const response = await fetch(API_URL + params, {
+      headers: { Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}` }
+    })
 
-  const [data] = await response.json()
+    if (!response.ok) {
+      return {
+        lastUpdatedTime: new Date().toISOString(),
+        latestCommitUrl: 'https://github.com/andrespaulino/andrespaulino.dev'
+      }
+    }
 
-  return {
-    lastUpdatedTime: data.commit.committer.date,
-    latestCommitUrl: data.html_url
+    const data = await response.json()
+    
+    // Check if data is array and has at least one element
+    if (Array.isArray(data) && data.length > 0) {
+      return {
+        lastUpdatedTime: data[0].commit.committer.date,
+        latestCommitUrl: data[0].html_url
+      }
+    } else {
+      // Return default values if data structure is not as expected
+      return {
+        lastUpdatedTime: new Date().toISOString(),
+        latestCommitUrl: 'https://github.com/andrespaulino/andrespaulino.dev'
+      }
+    }
+  } catch (error) {
+    console.error(`Error fetching data for ${filePath}:`, error)
+    // Return default values on error
+    return {
+      lastUpdatedTime: new Date().toISOString(),
+      latestCommitUrl: 'https://github.com/andrespaulino/andrespaulino.dev'
+    }
   }
 }
 
