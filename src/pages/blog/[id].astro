@@ -7,12 +7,18 @@ import ContentWrapper from '@/components/ContentWrapper.astro'
 import BlogLayout from '@/layouts/BlogLayout'
 import client from '@/lib/client'
 
+// Tell Astro to prerender this page
+export const prerender = true;
+
 export const getStaticPaths = (async () => {
   const blogEntries = await getCollection('blog')
 
   return blogEntries.map((entry) => {
+    // Extract just the filename without extension
+    const slug = entry.id.split('/').pop()?.replace(/\.mdx$/, '') || entry.id
+    
     return {
-      params: { id: entry.id },
+      params: { id: slug },
       props: { entry }
     }
   })
@@ -41,11 +47,14 @@ try {
 }
 
 const { minutes } = readingTime(entry.body!)
+
+// Extract slug from entry.id for consistent URLs
+const slug = entry.id.split('/').pop()?.replace(/\.mdx$/, '') || entry.id
 ---
 
 <BlogLayout
   headings={headings}
-  id={entry.id}
+  id={slug}
   updatedDate={new Date(lastUpdatedTime)}
   latestCommitUrl={latestCommitUrl}
   readingTime={Math.ceil(minutes)}

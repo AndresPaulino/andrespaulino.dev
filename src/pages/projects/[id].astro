@@ -9,15 +9,23 @@ import ProjectLayout from '@/layouts/ProjectLayout'
 import client from '@/lib/client'
 import { getProjectSchema, projectWebsite } from '@/lib/structuredData'
 
+// Tell Astro to prerender this page
+export const prerender = true;
+
 interface Props extends InferGetStaticPropsType<typeof getStaticPaths> {}
 
 export const getStaticPaths = (async () => {
   const projectEntries = await getCollection('projects')
 
-  return projectEntries.map((entry) => ({
-    params: { id: entry.id },
-    props: { entry }
-  }))
+  return projectEntries.map((entry) => {
+    // Extract just the filename without extension
+    const slug = entry.id.split('/').pop()?.replace(/\.mdx$/, '') || entry.id
+    
+    return {
+      params: { id: slug },
+      props: { entry }
+    }
+  })
 }) satisfies GetStaticPaths
 
 const { entry } = Astro.props
@@ -44,6 +52,9 @@ try {
 
 const { minutes, words } = readingTime(entry.body!)
 
+// Extract slug from entry.id for consistent URLs
+const slug = entry.id.split('/').pop()?.replace(/\.mdx$/, '') || entry.id
+
 const projectStructuredData = getProjectSchema(entry)
 
 const breadcrumbsStructuredData: WithContext<BreadcrumbList> = {
@@ -60,7 +71,7 @@ const breadcrumbsStructuredData: WithContext<BreadcrumbList> = {
       '@type': 'ListItem',
       position: 2,
       name: entry.data.title,
-      item: `${import.meta.env.SITE}/projects/${entry.id}/`
+      item: `${import.meta.env.SITE}/projects/${slug}/`
     }
   ]
 }
@@ -73,7 +84,7 @@ const jsonLd = {
 
 <ProjectLayout
   headings={headings}
-  slug={entry.id}
+  slug={slug}
   readingTime={Math.ceil(minutes)}
   wordsCount={words}
   updatedDate={new Date(lastUpdatedTime)}
